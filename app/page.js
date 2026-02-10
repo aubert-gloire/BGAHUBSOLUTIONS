@@ -360,7 +360,13 @@ export default function Home() {
               <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
                 <div className="w-32 h-32 rounded-2xl flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform duration-300 cursor-pointer overflow-hidden border-4 border-bga-accent/50 hover:border-bga-accent">
                   <img
-                    src="/Founder.jpeg" 
+                    src="/Founder.jpeg"
+                    alt="Aubert Gloire Bihibindi - Founder & CEO"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.parentElement.innerHTML = '<span class="text-5xl font-bold text-white">AG</span>';
+                    }}
                   />
                 </div>
 
