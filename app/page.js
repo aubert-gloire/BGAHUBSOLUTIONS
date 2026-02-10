@@ -358,8 +358,12 @@ export default function Home() {
           <div className="max-w-4xl mx-auto">
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 md:p-12 hover:border-bga-accent/30 transition-all animate-fade-in glow-hover">
               <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
-                <div className="w-32 h-32 bg-gradient-to-br from-bga-accent to-bga-purple rounded-2xl flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform duration-300 cursor-pointer">
-                  <span className="text-5xl font-bold text-white">AG</span>
+                <div className="w-32 h-32 rounded-2xl flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform duration-300 cursor-pointer overflow-hidden border-4 border-bga-accent/50 hover:border-bga-accent">
+                  <img 
+                    src="/founder.jpg" 
+                    alt="Aubert Gloire Bihibindi" 
+                    className="w-full h-full object-cover"
+                  />
                 </div>
 
                 <div className="flex-1 text-center md:text-left">
