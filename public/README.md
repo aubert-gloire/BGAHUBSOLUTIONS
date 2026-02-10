@@ -14,6 +14,7 @@ To replace the "AG" initials with your actual photo:
 3. **The photo will automatically appear** on your website where the "AG" initials were!
 
 **Example locations on Windows:**
+
 - Copy from: `C:\Users\YourName\Pictures\your-photo.jpg`
 - Paste to: `C:\bga-hub-solutions\public\founder.jpg`
 

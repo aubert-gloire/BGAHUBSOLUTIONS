@@ -1,26 +1,26 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(request) {
-  try {
-    const body = await request.json();
-    const { name, email, phone, service, message } = body;
+    try {
+        const body = await request.json();
+        const { name, email, phone, service, message } = body;
 
-    // Validate required fields
-    if (!name || !email || !service || !message) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      );
-    }
+        // Validate required fields
+        if (!name || !email || !service || !message) {
+            return NextResponse.json(
+                { error: 'Missing required fields' },
+                { status: 400 }
+            );
+        }
 
-    // Email configuration
-    const recipientEmail = 'aubertgloire@gmail.com';
-    
-    // Format email content
-    const emailContent = {
-      to: recipientEmail,
-      subject: `New Contact Form Submission - ${service}`,
-      html: `
+        // Email configuration
+        const recipientEmail = 'aubertgloire@gmail.com';
+
+        // Format email content
+        const emailContent = {
+            to: recipientEmail,
+            subject: `New Contact Form Submission - ${service}`,
+            html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
           <div style="background: linear-gradient(135deg, #6B5CE7 0%, #8B7FE8 100%); padding: 30px; border-radius: 10px 10px 0 0;">
             <h2 style="color: white; margin: 0;">New Appointment Request</h2>
@@ -59,7 +59,7 @@ export async function POST(request) {
           </div>
         </div>
       `,
-      text: `
+            text: `
 New Appointment Request from BGA Hub Solutions
 
 Name: ${name}
@@ -73,58 +73,58 @@ ${message}
 ---
 Received on: ${new Date().toLocaleString('en-US', { timeZone: 'Africa/Kigali' })}
       `
-    };
+        };
 
-    // Use Resend API to send email
-    const resendApiKey = process.env.RESEND_API_KEY;
-    
-    if (!resendApiKey) {
-      console.error('RESEND_API_KEY not configured');
-      // For now, just log to console if API key not set up
-      console.log('Contact Form Submission:', emailContent);
-      
-      return NextResponse.json({ 
-        success: true, 
-        message: 'Form received (email setup pending)' 
-      });
+        // Use Resend API to send email
+        const resendApiKey = process.env.RESEND_API_KEY;
+
+        if (!resendApiKey) {
+            console.error('RESEND_API_KEY not configured');
+            // For now, just log to console if API key not set up
+            console.log('Contact Form Submission:', emailContent);
+
+            return NextResponse.json({
+                success: true,
+                message: 'Form received (email setup pending)'
+            });
+        }
+
+        // Send email via Resend
+        const response = await fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${resendApiKey}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                from: 'BGA Hub Solutions <onboarding@resend.dev>', // You'll need to verify your domain
+                to: emailContent.to,
+                subject: emailContent.subject,
+                html: emailContent.html,
+            }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            console.error('Resend API error:', data);
+            return NextResponse.json(
+                { error: 'Failed to send email', details: data },
+                { status: 500 }
+            );
+        }
+
+        return NextResponse.json({
+            success: true,
+            message: 'Email sent successfully',
+            emailId: data.id
+        });
+
+    } catch (error) {
+        console.error('Contact form error:', error);
+        return NextResponse.json(
+            { error: 'Internal server error', details: error.message },
+            { status: 500 }
+        );
     }
-
-    // Send email via Resend
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${resendApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: 'BGA Hub Solutions <onboarding@resend.dev>', // You'll need to verify your domain
-        to: emailContent.to,
-        subject: emailContent.subject,
-        html: emailContent.html,
-      }),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      console.error('Resend API error:', data);
-      return NextResponse.json(
-        { error: 'Failed to send email', details: data },
-        { status: 500 }
-      );
-    }
-
-    return NextResponse.json({ 
-      success: true, 
-      message: 'Email sent successfully',
-      emailId: data.id 
-    });
-
-  } catch (error) {
-    console.error('Contact form error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error', details: error.message },
-      { status: 500 }
-    );
-  }
 }

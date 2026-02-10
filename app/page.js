@@ -359,10 +359,8 @@ export default function Home() {
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 md:p-12 hover:border-bga-accent/30 transition-all animate-fade-in glow-hover">
               <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
                 <div className="w-32 h-32 rounded-2xl flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform duration-300 cursor-pointer overflow-hidden border-4 border-bga-accent/50 hover:border-bga-accent">
-                  <img 
-                    src="/founder.jpg" 
-                    alt="Aubert Gloire Bihibindi" 
-                    className="w-full h-full object-cover"
+                  <img
+                    src="/Founder.jpeg" 
                   />
                 </div>
 
@@ -530,14 +528,14 @@ export default function Home() {
           </div>
 
           <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 md:p-12 animate-fade-in hover:border-bga-accent/30 transition-all">
-            <form 
-              action="https://formspree.io/f/xkovgdzv" 
+            <form
+              action="https://formspree.io/f/xkovgdzv"
               method="POST"
               className="space-y-6"
             >
               {/* Hidden subject field for better email organization */}
               <input type="hidden" name="_subject" value="New BGA Hub Solutions Contact Form Submission!" />
-              
+
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-white font-semibold mb-2">Full Name *</label>
